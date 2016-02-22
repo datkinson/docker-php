@@ -6,32 +6,19 @@ RUN apt-get update && apt-get install -y \
   bash \
   nginx \
   php5-fpm \
-#  php5-pdo \
   php5-json \
-#  php5-openssl \
   php5-mysql \
-#  php5-pdo_mysql \
   php5-mcrypt \
   php5-sqlite \
-#  php5-pdo_sqlite \
-#  php5-ctype \
-#  php5-zlib \
-#  php5-phar \
-#  php5-dom \
   php5-curl \
   php5-gd \
-#  php5-xml \
-#  php5-xmlreader \
-#  php5-iconv \
   php5-ldap \
-#  php5-zip \
   php5-ssh2 \
   libssh2-php \
   ssh \
   git \
   nodejs \
   supervisor
-
 
 RUN mkdir -p /etc/nginx/sites-enabled
 RUN mkdir -p /var/run/php-fpm
