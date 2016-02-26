@@ -32,7 +32,6 @@ ADD fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf
 VOLUME ["/var/www", "/etc/nginx/sites-enabled"]
 
 ADD nginx-supervisor.ini /etc/supervisor.d/nginx-supervisor.ini
-ADD composer/auth.json /root/.composer/auth.json
 ADD .docker/php/php.ini /etc/php/php.ini
 
 ADD .docker/scripts/permissions.sh /opt/scripts/permissions.sh
