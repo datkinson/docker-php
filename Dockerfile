@@ -1,7 +1,7 @@
 FROM debian
 MAINTAINER Daniel Atkinson <hourd.tasa@gmail.com>
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --fix-missing \
   aptitude \
   bash \
   nginx \
@@ -20,9 +20,7 @@ RUN apt-get update && apt-get install -y \
   nodejs \
   supervisor
 
-RUN mkdir -p /etc/nginx/sites-enabled
-RUN mkdir -p /var/run/php-fpm
-RUN mkdir -p /var/log/supervisor
+RUN mkdir -p /etc/nginx/sites-enabled /var/run/php-fpm /var/log/supervisor
 
 RUN rm /etc/nginx/nginx.conf
 ADD nginx.conf /etc/nginx/nginx.conf
@@ -33,9 +31,6 @@ VOLUME ["/var/www", "/etc/nginx/sites-enabled"]
 
 ADD nginx-supervisor.ini /etc/supervisor.d/nginx-supervisor.ini
 ADD .docker/php/php.ini /etc/php/php.ini
-
-ADD .docker/scripts/permissions.sh /opt/scripts/permissions.sh
-RUN chmod +x /opt/scripts/permissions.sh
 
 EXPOSE 80 9000
 
