@@ -1,7 +1,9 @@
 FROM debian
 MAINTAINER Daniel Atkinson <hourd.tasa@gmail.com>
 
-RUN apt-get update && apt-get install -y --fix-missing \
+RUN apt-get update \
+  && \
+  apt-get install -y --fix-missing \
   aptitude \
   bash \
   vim \
@@ -19,20 +21,23 @@ RUN apt-get update && apt-get install -y --fix-missing \
   nodejs \
   apache2 \
   libapache2-mod-php5 \
-  supervisor
-
-RUN ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load
-RUN mkdir -p /etc/nginx/sites-enabled /var/run/php-fpm /var/log/supervisor /var/lock/apache2 /var/run/apache2
+  supervisor \
+  && \
+  rm -rf /var/lib/apt/lists/* \
+  && \
+  ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load \
+  && \
+  mkdir -p /etc/nginx/sites-enabled /var/run/php-fpm /var/log/supervisor /var/lock/apache2 /var/run/apache2
 
 ADD .docker/apache/sites-enabled/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 
 VOLUME ["/var/www", "/etc/nginx/sites-enabled"]
 
-ADD supervisor.ini /etc/supervisor.d/nginx-supervisor.ini
+ADD supervisor.ini /etc/supervisor.d/supervisor.ini
 ADD .docker/php/php.ini /etc/php/php.ini
 
 EXPOSE 80
 
 WORKDIR /var/www
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.d/nginx-supervisor.ini"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.d/supervisor.ini"]
