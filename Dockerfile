@@ -4,8 +4,7 @@ MAINTAINER Daniel Atkinson <hourd.tasa@gmail.com>
 RUN apt-get update && apt-get install -y --fix-missing \
   aptitude \
   bash \
-  nginx \
-  php5-fpm \
+  vim \
   php5-json \
   php5-mysql \
   php5-mcrypt \
@@ -18,21 +17,21 @@ RUN apt-get update && apt-get install -y --fix-missing \
   ssh \
   git \
   nodejs \
+  apache2 \
+  libapache2-mod-php5 \
   supervisor
 
-RUN mkdir -p /etc/nginx/sites-enabled /var/run/php-fpm /var/log/supervisor
+RUN ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load
+RUN mkdir -p /etc/nginx/sites-enabled /var/run/php-fpm /var/log/supervisor /var/lock/apache2 /var/run/apache2
 
-RUN rm /etc/nginx/nginx.conf
-ADD nginx.conf /etc/nginx/nginx.conf
-ADD .docker/nginx/sites-enabled/default /etc/nginx/sites-enabled/default
-ADD fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf
+ADD .docker/apache/sites-enabled/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 
 VOLUME ["/var/www", "/etc/nginx/sites-enabled"]
 
-ADD nginx-supervisor.ini /etc/supervisor.d/nginx-supervisor.ini
+ADD supervisor.ini /etc/supervisor.d/nginx-supervisor.ini
 ADD .docker/php/php.ini /etc/php/php.ini
 
-EXPOSE 80 9000
+EXPOSE 80
 
 WORKDIR /var/www
 
