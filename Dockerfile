@@ -1,27 +1,41 @@
 FROM debian
 MAINTAINER Daniel Atkinson <hourd.tasa@gmail.com>
 
-RUN apt-get update \
+RUN echo "deb http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list \
+  && \
+  echo "deb-src http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list \
+  && \
+  apt-get update \
+  && \
+  apt-get install -y --fix-missing \
+  wget \
+  && \
+  wget https://www.dotdeb.org/dotdeb.gpg \
+  && \
+  apt-key add dotdeb.gpg \
+  && \
+  rm dotdeb.gpg \
+  && \
+  apt-get update \
   && \
   apt-get install -y --fix-missing \
   aptitude \
   bash \
   vim \
-  php5-json \
-  php5-mysql \
-  php5-mcrypt \
-  php5-sqlite \
-  php5-curl \
-  php5-gd \
-  php5-ldap \
-  php5-ssh2 \
   libssh2-php \
   ssh \
   git \
   nodejs \
   apache2 \
-  libapache2-mod-php5 \
   supervisor \
+  libapache2-mod-php7.0 \
+  php7.0-json \
+  php7.0-mysql \
+  php7.0-mcrypt \
+  php7.0-sqlite3 \
+  php7.0-curl \
+  php7.0-gd \
+  php7.0-ldap \
   && \
   rm -rf /var/lib/apt/lists/* \
   && \
