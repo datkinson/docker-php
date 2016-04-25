@@ -7,6 +7,8 @@ RUN apt-get update \
   aptitude \
   bash \
   vim \
+  curl \
+  wget \
   php5-json \
   php5-mysql \
   php5-mcrypt \
@@ -22,6 +24,12 @@ RUN apt-get update \
   apache2 \
   libapache2-mod-php5 \
   supervisor \
+  && \
+  wget https://getcomposer.org/composer.phar \
+  && \
+  mv composer.phar /bin/composer \
+  && \
+  chmod +x /bin/composer \
   && \
   rm -rf /var/lib/apt/lists/* \
   && \
