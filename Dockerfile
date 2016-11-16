@@ -1,6 +1,9 @@
 FROM debian
 MAINTAINER Daniel Atkinson <hourd.tasa@gmail.com>
 
+ADD wheezy.list /etc/apt/sources.list.d/wheezy.list
+ADD php5 /etc/apt/preferences.d/php5
+
 RUN apt-get update \
   && \
   apt-get install -y --fix-missing \
@@ -9,20 +12,17 @@ RUN apt-get update \
   vim \
   curl \
   wget \
-  php5-json \
+  php5-common \
   php5-mysql \
   php5-mcrypt \
   php5-sqlite \
   php5-curl \
   php5-gd \
   php5-ldap \
-  php5-ssh2 \
-  libssh2-php \
   ssh \
   git \
   nodejs \
   apache2 \
-  libapache2-mod-php5 \
   supervisor \
   && \
   wget https://getcomposer.org/composer.phar \
